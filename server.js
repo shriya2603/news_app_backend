@@ -1,15 +1,15 @@
 require("dotenv").config();
-// const morgan = require("morgan");
+const morgan = require("morgan");
 const cors = require("cors");
 const express = require("express");
 const routes = require("./routes");
 const app = express();
 
 app.use(cors());
-// app.use(morgan("dev"));
+app.use(morgan("dev"));
 app.use(express.json());
 
-app.routes("/", routes);
+app.use("/", routes);
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
