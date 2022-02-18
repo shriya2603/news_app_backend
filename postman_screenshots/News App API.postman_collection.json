@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "9b915b28-2a60-4cfc-8a43-9d20d1808ef2",
+		"name": "News App API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Feeds",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3006/getFeeds"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Feeds By filter",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3006/getFeedsByFilter?category=technology&author_name=Shomik Sen",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3006",
+					"path": [
+						"getFeedsByFilter"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "technology"
+						},
+						{
+							"key": "author_name",
+							"value": "Shomik Sen"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sort feeds by upload time",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3006/getSortedFeedsBy?orderBy=ASC&sortBy=upload_time",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3006",
+					"path": [
+						"getSortedFeedsBy"
+					],
+					"query": [
+						{
+							"key": "orderBy",
+							"value": "ASC"
+						},
+						{
+							"key": "sortBy",
+							"value": "upload_time"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3006/getMyProfile/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Create or Update profile",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept-encoding": true,
+					"accept": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"username\": \"rajj\",\r\n\"email\":\"ss\",\r\n\"password\":\"pinkredgreen\",\r\n\"phoneNo\":1234567890,\r\n\"date_of_birth\":\"2016-06-23\",\r\n\"time_of_birth\": \"08:00:00\",\r\n\"gender\":\"male\",\r\n\"marital_status\":\"single\",\r\n\"language\": \"english\",\r\n\"profile_picture\":\"C:\\studies\\study_material\\Workspace\\Projects\\news_api\\database\\profile.png\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3006/addOrUpdateMyProfile/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Search Feeds",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3006/getFeedsBySearchString/sen"
+			},
+			"response": []
+		}
+	]
+}

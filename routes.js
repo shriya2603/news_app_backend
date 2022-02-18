@@ -16,11 +16,10 @@ router.get("/getFeeds", async (request, response) => {
     }
     response.status(200).json({
       status: "success",
-      results: feeds.rows.length,
-      data: { feeds: feeds.rows },
+      results: feeds.length,
+      data: { feeds: feeds },
     });
   } catch (error) {
-    // console.log(error);
     response.status(500).send(error);
   }
 });
@@ -41,7 +40,6 @@ router.get("/getFeedsByFilter", async (request, response) => {
     const filteredFeeds = feeds.filter((feed) => {
       let isValid = true;
       for (key in filters) {
-        console.log(key, feed[key], filters[key]);
         isValid = isValid && feed[key] == filters[key];
       }
       return isValid;
@@ -52,7 +50,6 @@ router.get("/getFeedsByFilter", async (request, response) => {
       data: { feeds: filteredFeeds },
     });
   } catch (error) {
-    // console.log(error);
     response.status(500).send(error);
   }
 });
@@ -101,7 +98,6 @@ router.get("/getSortedFeedsBy", async (request, response) => {
         "SELECT headline, category, author_name, author_id, upload_time FROM feeds ORDER BY $1 DESC;";
     }
     const { rows: feeds } = await db.query(query, [sortBy]);
-    //console.log(feeds);
     if (feeds != null && feeds.length <= 0) {
       response.status(200).json({
         status: "success",
@@ -114,36 +110,33 @@ router.get("/getSortedFeedsBy", async (request, response) => {
       data: { feeds: feeds },
     });
   } catch (error) {
-    // console.log(error);
     response.status(500).send(error);
   }
 });
 
-// get user details :http://localhost:3006/getMyProfile/1
+// Get user details :http://localhost:3006/getMyProfile/1
 router.get("/getMyProfile/:id", async (request, response) => {
   try {
     const { rows: user } = await db.query(
       "SELECT userid, username, email FROM user_data where userid=$1",
       [request.params.id]
     );
-    console.log(user);
     response.status(200).json({
       status: "success",
       data: { user: user },
     });
   } catch (error) {
-    console.log(error);
-    response.status(500).send("An error occured ");
+    response.status(500).send(error);
   }
 });
 
+// Create or Update User Profile:http://localhost:3006/addOrUpdateMyProfile/1
 router.put("/addOrUpdateMyProfile/:id", async (request, response) => {
   try {
     const { rows: user } = await db.query(
       "SELECT * FROM user_data where userid=$1",
       [request.params.id]
     );
-    //console.log(request);
     const username = request.body.username;
     const email = request.body.email;
     const password = request.body.password;
@@ -205,7 +198,7 @@ router.put("/addOrUpdateMyProfile/:id", async (request, response) => {
           ]
         );
       }
-      console.log(addedOrUpdatedUser);
+
       response.status(200).json({
         status: "success",
         data: { user: addedOrUpdatedUser },
@@ -216,7 +209,6 @@ router.put("/addOrUpdateMyProfile/:id", async (request, response) => {
         .send("Please enter all details with correct inputs ");
     }
   } catch (error) {
-    console.log(error);
     response.status(500).send(error);
   }
 });
